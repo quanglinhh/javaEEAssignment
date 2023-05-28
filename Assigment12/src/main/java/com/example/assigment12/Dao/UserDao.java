@@ -29,14 +29,13 @@ public class UserDao {
         return users;
     }
 
-    public void deleteUserByName(String name) {
+    public void deleteUserById(int id) {
         em.getTransaction().begin();
 
-        String sql = "DELETE FROM User u WHERE u.name = :name";
+        String sql = "DELETE FROM User  WHERE User.id = :id";
         Query query = em.createNativeQuery(sql,UserEntity.class);
-        query.setParameter("name", name);
+        query.setParameter("id", id);
         query.executeUpdate();
-
         em.getTransaction().commit();
     }
 
@@ -50,10 +49,18 @@ public class UserDao {
 
         em.getTransaction().commit();
     }
-
+    public UserEntity getUserById(int id){
+        em.getTransaction().begin();
+        String sql = "SELECT * FROM User u WHERE u.id =:id";
+        Query query = em.createNativeQuery(sql,UserEntity.class);
+        query.setParameter("id", id);
+        UserEntity user = (UserEntity) query.getSingleResult();
+        em.getTransaction().commit();
+        return user;
+    }
     public List<UserEntity> getUserByName(String name){
         em.getTransaction().begin();
-        String sql = "SELECT FROM User u WHERE u.name =: name";
+        String sql = "SELECT * FROM User u WHERE u.name =:name";
         Query query = em.createNativeQuery(sql,UserEntity.class);
         query.setParameter("name", name);
         List<UserEntity> users = query.getResultList();

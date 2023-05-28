@@ -12,12 +12,29 @@ public class UserEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "email")
+    private String email;
+
     public UserEntity() {
     }
 
     public UserEntity(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public UserEntity(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getId() {

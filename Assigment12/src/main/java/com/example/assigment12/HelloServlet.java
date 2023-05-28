@@ -23,10 +23,8 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         List<UserEntity> users = userDao.getAllUser();
-        // Hello
-        PrintWriter out = response.getWriter();
         request.setAttribute("users",users);
-        request.getRequestDispatcher("/users.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/userList.jsp").forward(request, response);
     }
 
     public void destroy() {
