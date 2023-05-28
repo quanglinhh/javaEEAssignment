@@ -19,12 +19,21 @@ public class UserDao {
         tran = em.getTransaction();
     }
 
+    public List<UserEntity> getAllUser(){
+        em.getTransaction().begin();
+        String sql = "SELECT * FROM User";
+        Query query = em.createNativeQuery(sql,UserEntity.class);
+        List<UserEntity> users = query.getResultList();
+        System.out.println(users);
+        em.getTransaction().commit();
+        return users;
+    }
 
     public void deleteUserByName(String name) {
         em.getTransaction().begin();
 
-        String sql = "DELETE FROM UserEntity u WHERE u.name = :name";
-        Query query = em.createNativeQuery(sql);
+        String sql = "DELETE FROM User u WHERE u.name = :name";
+        Query query = em.createNativeQuery(sql,UserEntity.class);
         query.setParameter("name", name);
         query.executeUpdate();
 
@@ -33,8 +42,8 @@ public class UserDao {
 
     public void updateUser(int userID, UserEntity user){
       em.getTransaction().begin();
-      String sql = "UPDATE UserEntity u SET u.name =:name WHERE u.id=:userId";
-      Query query = em.createNativeQuery(sql);
+      String sql = "UPDATE User u SET u.name =:name WHERE u.id=:userId";
+      Query query = em.createNativeQuery(sql,UserEntity.class);
         query.setParameter("name", user.getName());
         query.setParameter("userId",userID);
         query.executeUpdate();
@@ -44,8 +53,8 @@ public class UserDao {
 
     public List<UserEntity> getUserByName(String name){
         em.getTransaction().begin();
-        String sql = "SELECT FROM UserEntity u WHERE u.name =: name";
-        Query query = em.createNativeQuery(sql);
+        String sql = "SELECT FROM User u WHERE u.name =: name";
+        Query query = em.createNativeQuery(sql,UserEntity.class);
         query.setParameter("name", name);
         List<UserEntity> users = query.getResultList();
         em.getTransaction().commit();
