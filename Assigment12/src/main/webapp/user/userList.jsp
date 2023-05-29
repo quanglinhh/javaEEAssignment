@@ -52,8 +52,10 @@
     <% } %>
     </tbody>
 </table>
+<a type="submit" class="btn btn-info" href="userServlet">Create User</a>
 <% } else {%>
 <h1>Hello !!</h1>
+<a type="submit" class="btn btn-info" href="userServlet">Create User</a>
 <% } %>
 </body>
 </html>
