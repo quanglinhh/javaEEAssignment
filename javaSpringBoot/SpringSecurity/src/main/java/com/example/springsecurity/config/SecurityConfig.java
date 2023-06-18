@@ -23,6 +23,26 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+//        httpSecurity.csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .antMatchers("/login/**").permitAll()
+//                .antMatchers("/css/*").permitAll()
+//                .antMatchers("/user/*").hasRole("USER")
+//                .antMatchers("/admin/*").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN")
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/user/hello")
+//                .failureUrl("/login")
+//                .successForwardUrl("/user/hello")
+//                .failureForwardUrl("/login?error=true")
+//                .and()
+//                .logout().permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/access-denied");
+//        return httpSecurity.build();
         httpSecurity.csrf()
                 .disable()
                 .authorizeRequests()
@@ -33,18 +53,16 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN")
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login")
+                .defaultSuccessUrl("/user/hello")
+                .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/user/hello")
-                .failureForwardUrl("/login?error=true")
                 .and()
                 .logout().permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");
+
         return httpSecurity.build();
     }
 }
