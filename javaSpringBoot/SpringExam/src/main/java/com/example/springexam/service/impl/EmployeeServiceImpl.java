@@ -14,14 +14,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeRepository employeeRepository;
 
     @Override
-    public Employee createEmployee(Employee employee) {
+    public void createEmployee(Employee employee) {
         try{
             employeeRepository.save(employee);
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return employee;
     }
 
     @Override

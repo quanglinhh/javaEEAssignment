@@ -4,35 +4,41 @@ import com.example.springexam.model.Employee;
 import com.example.springexam.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("api/v1/employee")
+@Controller
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
     @PostMapping("/createEmployee")
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee){
+    public String createEmployee(@ModelAttribute Employee employee){
         try{
-            Employee newEmployee = employeeService.createEmployee(employee);
-            return ResponseEntity.ok(newEmployee);
+           employeeService.createEmployee(employee);
+            return "redirect:/findAllEmployees";
         }catch (Exception e){
             e.printStackTrace();
         }
        return null;
     }
 
-    @GetMapping("/findAllEmployees")
-    public ResponseEntity<List<Employee>> findAllEmployees(){
+    @GetMapping("/addEmployee")
+    public String addEmployee(Model model){
+        Employee newEmployee = new Employee();
+        model.addAttribute("employee",employeeService.createEmployee(newEmployee));
+        return "createEmployee";
+    }
+
+    @GetMapping(value = {"/findAllEmployees","/"})
+    public String findAllEmployees(Model model){
         try {
             List<Employee> employees = employeeService.findAllEmployees();
-            if(employees.size()==0){
-                return (ResponseEntity<List<Employee>>) ResponseEntity.notFound();
-            }
-            return ResponseEntity.ok(employees);
+            model.addAttribute("employees",employees);
+            return "listEmployees";
         }catch (Exception e){
             e.printStackTrace();
         }
