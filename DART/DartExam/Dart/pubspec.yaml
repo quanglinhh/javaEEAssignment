@@ -1,0 +1,8 @@
+name: your_project_name
+description: A Dart project that interacts with APIs
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+environment:
+  sdk: '>=2.14.0 <3.0.0'
